@@ -23,6 +23,7 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,6 +35,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -51,6 +53,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 // TODO: register
 public abstract class UartBaseFragment extends ConnectedPeripheralFragment implements UartPacketManagerBase.Listener, MqttManager.MqttManagerListener {
@@ -73,6 +76,7 @@ public abstract class UartBaseFragment extends ConnectedPeripheralFragment imple
     private EditText mBufferTextView;
     private RecyclerView mBufferRecylerView;
     protected TimestampItemAdapter mBufferItemAdapter;
+    protected ImageView mCarImg;
     private EditText mSendEditText;
     private Button mSendButton;
     private MenuItem mMqttMenuItem;
@@ -80,6 +84,7 @@ public abstract class UartBaseFragment extends ConnectedPeripheralFragment imple
     private TextView mSentBytesTextView;
     private TextView mReceivedBytesTextView;
     protected Spinner mSendPeripheralSpinner;
+    private int[] cars = {R.drawable.car0, R.drawable.car1, R.drawable.car2, R.drawable.car3, R.drawable.car4};;
 
     // UI TextBuffer (refreshing the text buffer is managed with a timer because a lot of changes can arrive really fast and could stall the main thread)
     private Handler mUIRefreshTimerHandler = new Handler();
@@ -156,6 +161,8 @@ public abstract class UartBaseFragment extends ConnectedPeripheralFragment imple
         if (mBufferTextView != null) {
             mBufferTextView.setKeyListener(null);     // make it not editable
         }
+        mCarImg = view.findViewById(R.id.carImg);
+        mCarImg.setImageResource(cars[0]);
 
         // Send Text
         mSendEditText = view.findViewById(R.id.sendEditText);
@@ -560,7 +567,10 @@ public abstract class UartBaseFragment extends ConnectedPeripheralFragment imple
                 }
 
                 mBufferTextView.setText(mTextSpanBuffer);
+                Log.d("mTextSpanBuffer: ", mTextSpanBuffer.toString());
+                mCarImg.setImageResource(cars[Integer.parseInt(mTextSpanBuffer.toString())]);
                 mBufferTextView.setSelection(0, mTextSpanBuffer.length());        // to automatically scroll to the end
+                mTextSpanBuffer.clear();
             }
 
             mPacketsCacheLastSize = packetsCacheSize;
@@ -756,7 +766,6 @@ public abstract class UartBaseFragment extends ConnectedPeripheralFragment imple
 
             SpannableString text = stringFromPacket(packet, mShowDataInHexFormat, color, isBold);
             itemViewHolder.dataTextView.setText(text);
-
             itemViewHolder.mainViewGroup.setBackgroundColor(position % 2 == 0 ? Color.WHITE : 0xeeeeee);
         }
 
