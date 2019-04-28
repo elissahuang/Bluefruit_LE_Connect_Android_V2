@@ -73,6 +73,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/sendLayout"
         android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
         android:background="@color/white"
         android:orientation="vertical">
 
@@ -80,24 +82,30 @@
             android:id="@+id/bufferRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1" >
+
+        </android.support.v7.widget.RecyclerView>
+
+        <ImageView
+            android:id="@+id/carImg"
+            android:layout_width="match_parent"
+            android:layout_height="549dp"
+            android:layout_weight="1"
+            android:src="@drawable/car0" />
 
         <EditText
             android:id="@+id/bufferTextView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="17dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:cursorVisible="false"
             android:gravity="top"
             android:scrollbarFadeDuration="0"
-            android:textColorHighlight="#ffffff" />
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textColorHighlight="#ffffff"
+            android:textSize="30sp" />
 
-        <ImageView
-            android:id="@+id/carImg"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:src="@drawable/car0" />
     </LinearLayout>
 </RelativeLayout>

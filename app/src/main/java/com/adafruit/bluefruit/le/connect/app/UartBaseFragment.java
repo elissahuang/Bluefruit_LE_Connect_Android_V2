@@ -567,7 +567,6 @@ public abstract class UartBaseFragment extends ConnectedPeripheralFragment imple
                 }
 
                 mBufferTextView.setText(mTextSpanBuffer);
-                Log.d("mTextSpanBuffer: ", mTextSpanBuffer.toString());
                 mCarImg.setImageResource(cars[Integer.parseInt(mTextSpanBuffer.toString())]);
                 mBufferTextView.setSelection(0, mTextSpanBuffer.length());        // to automatically scroll to the end
                 mTextSpanBuffer.clear();
