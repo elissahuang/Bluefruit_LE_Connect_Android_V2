@@ -161,6 +161,7 @@ public abstract class UartBaseFragment extends ConnectedPeripheralFragment imple
         if (mBufferTextView != null) {
             mBufferTextView.setKeyListener(null);     // make it not editable
         }
+
         mCarImg = view.findViewById(R.id.carImg);
         mCarImg.setImageResource(cars[0]);
 
@@ -508,7 +509,7 @@ public abstract class UartBaseFragment extends ConnectedPeripheralFragment imple
     private void addTextToSpanBuffer(SpannableStringBuilder spanBuffer, String text, int color, boolean isBold) {
         final int from = spanBuffer.length();
         spanBuffer.append(text);
-        spanBuffer.setSpan(new ForegroundColorSpan(color), from, from + text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spanBuffer.setSpan(new ForegroundColorSpan(Color.BLACK), from, from + text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         if (isBold) {
             spanBuffer.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), from, from + text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
@@ -565,9 +566,18 @@ public abstract class UartBaseFragment extends ConnectedPeripheralFragment imple
                     final UartPacket packet = packetsCache.get(i);
                     onUartPacketText(packet);
                 }
-
+                float v = Float.parseFloat(mTextSpanBuffer.toString());
+                if (v < 0.3) {
+                    mCarImg.setImageResource(R.drawable.car1);
+                } else if (v < 0.9 && v >= 0.3) {
+                    mCarImg.setImageResource(R.drawable.car2);
+                } else if (v < 2.7 && v >= 0.9) {
+                    mCarImg.setImageResource(R.drawable.car3);
+                } else if (v >= 2.7){
+                    mCarImg.setImageResource(R.drawable.car4);
+                }
+                mTextSpanBuffer.append(" meters");
                 mBufferTextView.setText(mTextSpanBuffer);
-                mCarImg.setImageResource(cars[Integer.parseInt(mTextSpanBuffer.toString())]);
                 mBufferTextView.setSelection(0, mTextSpanBuffer.length());        // to automatically scroll to the end
                 mTextSpanBuffer.clear();
             }
