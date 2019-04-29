@@ -84,7 +84,6 @@ public abstract class UartBaseFragment extends ConnectedPeripheralFragment imple
     private TextView mSentBytesTextView;
     private TextView mReceivedBytesTextView;
     protected Spinner mSendPeripheralSpinner;
-    private int[] cars = {R.drawable.car0, R.drawable.car1, R.drawable.car2, R.drawable.car3, R.drawable.car4};;
 
     // UI TextBuffer (refreshing the text buffer is managed with a timer because a lot of changes can arrive really fast and could stall the main thread)
     private Handler mUIRefreshTimerHandler = new Handler();
@@ -163,7 +162,7 @@ public abstract class UartBaseFragment extends ConnectedPeripheralFragment imple
         }
 
         mCarImg = view.findViewById(R.id.carImg);
-        mCarImg.setImageResource(cars[0]);
+        mCarImg.setImageResource(R.drawable.car0);
 
         // Send Text
         mSendEditText = view.findViewById(R.id.sendEditText);
